@@ -1,0 +1,16 @@
+package ma.bdcc.repositories;
+
+import ma.bdcc.entities.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import java.util.List;
+
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    List<Product> findByNameContains(String keyword);
+
+    @Query("SELECT p FROM Product p WHERE p.price > :price")
+    List<Product> searchByPrice(@Param("price") double price);
+
+    List<Product> findByPriceGreaterThan(double price);
+}
